@@ -131,7 +131,9 @@ RUN python3 -m pip install --no-cache-dir jupyterlab matplotlib \
 
 
 RUN python3 -m pip install --no-cache-dir jupyterlab  \
-    jupyter_http_over_ws nbformat==5.1.2 jupyterlab_vim jupyterlab-lsp python-language-server[all] \
+    jupyter_http_over_ws nbformat==5.1.2 jupyterlab_vim \
+    jedi==0.17.2 \
+    jupyterlab-lsp python-language-server[all] \
     ipywidgets \
     && jupyter serverextension enable --py jupyter_http_over_ws
 
@@ -147,6 +149,8 @@ RUN ARCH="$(dpkg --print-architecture)" && \
 
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
+RUN python3 -m ipykernel.kernelspec
+
 EXPOSE 8888
 
 
@@ -158,5 +162,6 @@ WORKDIR /home/jovyan
 RUN mkdir .lsp_symlink \
     && cd .lsp_symlink \
     && ln -s /home home
+
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
