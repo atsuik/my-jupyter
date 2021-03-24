@@ -132,10 +132,13 @@ RUN python3 -m pip install --no-cache-dir jupyterlab matplotlib \
 
 RUN python3 -m pip install --no-cache-dir jupyterlab  \
     jupyter_http_over_ws nbformat==5.1.2 jupyterlab_vim \
+    cufflinks plotly \
     jedi==0.17.2 \
     jupyterlab-lsp python-language-server[all] \
     ipywidgets \
     && jupyter serverextension enable --py jupyter_http_over_ws
+
+RUN jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3
 
 RUN adduser --gecos '' --disabled-password jovyan && \
     echo "jovyan ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
