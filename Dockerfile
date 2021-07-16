@@ -66,11 +66,10 @@ RUN set -ex \
     108F52B48DB57BB0CC439B2997B01419BD92F80A \
     B9E2F5981AA6E0CD28160D9FF13993A75599653C \
     ; do \
-    gpg --batch --keyserver ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
-    gpg --batch --keyserver pool.sks-keyservers.net --recv-keys "$key" || \
+    gpg --batch --keyserver keyserver.ubuntu.com --recv-key "$key" || \
+    gpg --batch --keyserver keys.openpgp.org --recv-key "$key" || \
     gpg --batch --keyserver pgp.mit.edu --recv-keys "$key" || \
-    gpg --batch --keyserver keyserver.pgp.com --recv-keys "$key" || \
-    gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" ; \
+    gpg --batch --keyserver keyserver.pgp.com --recv-keys "$key" ; \
     done
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
