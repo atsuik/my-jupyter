@@ -45,6 +45,7 @@ RUN apt-get update \
     xz-utils \
     python3 \
     python3-pip \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # See http://bugs.python.org/issue19846
@@ -91,6 +92,12 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+&& unzip awscliv2.zip \
+&& ./aws/install \
+&& rm -rf awscliv2.zip ./aws
+
+
 RUN python3 -m pip --no-cache-dir install --upgrade pip
 
 RUN python3 -m pip --no-cache-dir install --upgrade \
@@ -117,7 +124,10 @@ RUN python3 -m pip install --no-cache-dir jupyterlab matplotlib \
     scikit-learn \
     tensorflow-datasets \
     matplotlib \
-    flake8
+    flake8 \
+    boto3 \
+    pandas-datareader \
+    yahoo_fin
 
 
 RUN python3 -m pip install --no-cache-dir jupyterlab  \
